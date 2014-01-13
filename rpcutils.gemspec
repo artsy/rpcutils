@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.homepage = "http://github.com/artsy/rpcutils"
   gem.license = "MIT"
   gem.summary = %Q{rpc clients.}
-  gem.version = '0.1'
+  gem.version = '0.2'
 
   gem.description = <<-EOS
     Repository of rpc clients.
