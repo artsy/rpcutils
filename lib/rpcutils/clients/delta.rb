@@ -1,12 +1,10 @@
 require 'json'
 require 'typhoeus'
+require_relative './base'
 
 module RpcUtils
   module Clients
-    class Delta
-      attr_accessor :host, :port
-
-      @@defaults = { host: 'localhost', port: 5000 }
+    class Delta < Base
 
       # send an event to delta service.
       def send(event)
@@ -32,11 +30,6 @@ module RpcUtils
 
       def serialize
         event.to_json
-      end
-
-      def initialize(opts = {})
-        @host = opts.fetch(:host, @@defaults[:host])
-        @port = opts.fetch(:port, @@defaults[:port])
       end
 
       def base_url
