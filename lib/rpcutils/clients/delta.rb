@@ -16,8 +16,8 @@ module RpcUtils
 
       # fetch all trending artists.
       def get_trending_artists(opts = {})
-        n = opts[:n] || 100
-        request = Typhoeus::Request.new(base_url + "/artists?n=#{n}")
+        opts[:n] = opts.fetch(:n, 100)
+        request = Typhoeus::Request.new(base_url + "/artists?" + opts.to_query)
         send_request(request)
         response = request.response
 
