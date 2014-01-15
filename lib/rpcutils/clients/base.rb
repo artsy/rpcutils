@@ -14,7 +14,7 @@ module RpcUtils
       end
 
       def load_defaults
-        return @@defaults if @@defaults.size
+        return @@defaults if @@defaults.any?
         yml = File.expand_path('../../../../config/clients.yml', __FILE__)
         conf = YAML.load_file(yml)
         name = self.class.name.downcase.split('::').last
