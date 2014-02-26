@@ -3,7 +3,7 @@ require 'rpcutils/clients/delta'
 
 describe 'RpcUtils::Clients::Base' do
   before(:each) do
-    RpcUtils::Clients::Base.any_instance.stub(:load_defaults) { }
+    RpcUtils::Clients::Base.any_instance.stub(:load_defaults) {}
     RpcUtils::Clients::Base.any_instance.stub(:config) { { host: 'localhost', port: 666 } }
   end
   describe 'configuration' do
@@ -31,14 +31,14 @@ describe 'RpcUtils::Clients::Base' do
     it 'sends requests correctly using call method' do
       request = double
       response = double
-      rsp = JSON.generate({ rsp: 1 })
+      rsp = JSON.generate(rsp: 1)
       request.should_receive(:response).and_return(response)
       response.should_receive(:success?).and_return(true)
       response.should_receive(:body).and_return(rsp)
       Typhoeus::Request.should_receive(:new).with('http://localhost:666/?method=foo&param1=blah') { request }
       client = RpcUtils::Clients::Base.new
       client.should_receive(:send_request).with(request) {}
-      client.call('foo', { param1: 'blah' }).should == JSON.parse(rsp)
+      client.call('foo', param1: 'blah').should == JSON.parse(rsp)
     end
   end
 end
