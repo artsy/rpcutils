@@ -8,7 +8,7 @@ module RpcUtils
       # emit an event to delta service.
       # fire and forget.
       def emit(event)
-        request = Typhoeus::Request.new(base_url + '/event', body: serialize(event))
+        request = Typhoeus::Request.new(base_url + '/event', method: :post, body: serialize(event))
         send_request(request)
       end
 
@@ -17,7 +17,7 @@ module RpcUtils
         call(:get_trending_artists, opts)
       end
 
-      def serialize
+      def serialize(event)
         event.to_json
       end
     end
