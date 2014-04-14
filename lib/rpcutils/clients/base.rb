@@ -10,7 +10,7 @@ module RpcUtils
         raise ValueError, 'Please add client defaults to config file.' unless config.size
         @host = opts.fetch(:host, config[:host])
         @port = opts.fetch(:port, config[:port])
-        @protocol = opts.fetch(:protocol, config.fetch(:protocol, 'https'))
+        @protocol = opts.fetch(:protocol, config.fetch(:protocol, 'http'))
       end
 
       # generic rpc method call.
