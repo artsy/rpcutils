@@ -10,6 +10,7 @@ module RpcUtils
         raise ValueError, 'Please add client defaults to config file.' unless config.size
         @host = opts.fetch(:host, config[:host])
         @port = opts.fetch(:port, config[:port])
+        @protocol = opts.fetch(:protocol, config.fetch(:protocol, 'https'))
       end
 
       # generic rpc method call.
@@ -29,7 +30,7 @@ module RpcUtils
       end
 
       def base_url
-        url = "http://#{@host}"
+        url = "#{@protocol}://#{@host}"
         url += ":#{@port}" if @port
         url
       end

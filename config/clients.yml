@@ -1,4 +1,3 @@
 delta:
-  host: 54.205.15.41
+  host: delta.artsy.net
   port: 80
-
