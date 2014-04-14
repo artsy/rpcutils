@@ -22,7 +22,7 @@ describe 'RpcUtils::Clients::Base' do
 
   describe 'request builder' do
     it 'builds base url correctly' do
-      client = RpcUtils::Clients::Base.new(host: 'testhost', port: 80)
+      client = RpcUtils::Clients::Base.new(host: 'testhost', port: 80, protocol: 'http')
       client.base_url.should == 'http://testhost:80'
     end
   end
@@ -35,7 +35,7 @@ describe 'RpcUtils::Clients::Base' do
       request.should_receive(:response).and_return(response)
       response.should_receive(:success?).and_return(true)
       response.should_receive(:body).and_return(rsp)
-      Typhoeus::Request.should_receive(:new).with('http://localhost:666/?method=foo&param1=blah') { request }
+      Typhoeus::Request.should_receive(:new).with('https://localhost:666/?method=foo&param1=blah') { request }
       client = RpcUtils::Clients::Base.new
       client.should_receive(:send_request).with(request) {}
       client.call('foo', param1: 'blah').should == JSON.parse(rsp)

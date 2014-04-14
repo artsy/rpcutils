@@ -62,10 +62,6 @@ NumericLiterals:
 Eval:
   Enabled: false
 
-SymbolName:
-  # we use const_defined?(:BUILD_STATUSES)
-  Enabled: false
-
 CyclomaticComplexity:
   Enabled: false
 
