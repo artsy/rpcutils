@@ -7,7 +7,7 @@ module RpcUtils
 
       def initialize(opts = {})
         @@defaults ||= load_defaults
-        raise ValueError, 'Please add client defaults to config file.' unless config.size
+        fail ValueError, 'Please add client defaults to config file.' unless config.size
         @host = opts.fetch(:host, config[:host])
         @port = opts.fetch(:port, config[:port])
         @protocol = opts.fetch(:protocol, config.fetch(:protocol, 'http'))
@@ -23,7 +23,7 @@ module RpcUtils
         if response.success?
           response
         else
-          raise error_string_for(response)
+          fail error_string_for(response)
         end
 
         JSON.parse response.body
@@ -38,7 +38,7 @@ module RpcUtils
       protected
 
       def get_request(opts)
-        Typhoeus::Request.new(base_url + "/?" + opts.to_query)
+        Typhoeus::Request.new(base_url + '/?' + opts.to_query)
       end
 
       def send_request(request)
@@ -58,9 +58,9 @@ module RpcUtils
 
       def error_string_for(response)
         if response.timed_out?
-          "Request timed out"
+          'Request timed out'
         elsif response.code == 0
-          "Service could not be reached"
+          'Service could not be reached'
         else
           "Error (#{response.code}): #{response.body}"
         end
