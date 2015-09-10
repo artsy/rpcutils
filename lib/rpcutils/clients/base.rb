@@ -3,7 +3,7 @@ require 'yaml'
 module RpcUtils
   module Clients
     class Base
-      attr_accessor :host, :port, :conf
+      attr_accessor :host, :port, :conf, :timeout
 
       def initialize(opts = {})
         @@defaults ||= load_defaults
@@ -11,6 +11,7 @@ module RpcUtils
         @host = opts.fetch(:host, config[:host])
         @port = opts.fetch(:port, config[:port])
         @protocol = opts.fetch(:protocol, config.fetch(:protocol, 'http'))
+        @timeout = opts.fetch(:protocol, config.fetch(:timeout, 10))
       end
 
       # generic rpc method call.
@@ -38,7 +39,7 @@ module RpcUtils
       protected
 
       def get_request(opts)
-        Typhoeus::Request.new(base_url + '/?' + opts.to_query)
+        Typhoeus::Request.new(base_url + '/?' + opts.to_query, timeout: timeout)
       end
 
       def send_request(request)
