@@ -18,6 +18,11 @@ describe 'RpcUtils::Clients::Base' do
       client.host.should == 'testhost'
       client.port.should == 80
     end
+
+    it 'supports timeout' do
+      client = RpcUtils::Clients::Base.new(timeout: 10)
+      client.timeout.should == 10
+    end
   end
 
   describe 'request builder' do
@@ -35,7 +40,9 @@ describe 'RpcUtils::Clients::Base' do
       request.should_receive(:response).and_return(response)
       response.should_receive(:success?).and_return(true)
       response.should_receive(:body).and_return(rsp)
-      Typhoeus::Request.should_receive(:new).with('http://localhost:666/?method=foo&param1=blah') { request }
+      Typhoeus::Request.should_receive(:new).with(
+        'http://localhost:666/?method=foo&param1=blah',
+        timeout: 10) { request }
       client = RpcUtils::Clients::Base.new
       client.should_receive(:send_request).with(request) {}
       client.call('foo', param1: 'blah').should == JSON.parse(rsp)
